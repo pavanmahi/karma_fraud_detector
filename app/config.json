@@ -1,0 +1,27 @@
+{
+  "fraud_score_thresholds": {
+    "clean": 0.2,
+    "flagged": 0.5,
+    "banned": 0.7
+  },
+  "version": "1.0.0",
+  "model_settings": {
+    "model_path": "model/model.pkl",
+    "feature_names_path": "model/feature_names.json",
+    "spam_model_path": "model/spam_clf.pkl",
+    "loweffort_model_path": "model/loweffort_clf.pkl"
+  },
+  "nlp_settings": {
+    "spam_threshold": 0.5,
+    "loweffort_threshold": 0.65
+  },
+  "suspicious_activity_thresholds": {
+    "young_upvote_ratio": 0.3,
+    "upvote_burst_count": 1,
+    "upvote_concentration": 0.5,
+    "mutual_upvote_count": 1,
+    "avg_post_spam_score": 0.5,
+    "post_burst_count": 2,
+    "upvote_sent_burst_count": 2
+  }
+} 

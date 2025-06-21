@@ -14,7 +14,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.nlp_utils import ContentNLPAnalyzer
 
 # Load config
-CONFIG_PATH = 'config.json'
+CONFIG_PATH = 'app/config.json'
 MODEL_PATH = 'model/model.pkl'
 FEATURE_NAMES_PATH = 'model/feature_names.json'
 
@@ -24,15 +24,34 @@ def load_config():
         with open(CONFIG_PATH) as f:
             return json.load(f)
     return {
-        "fraud_score_thresholds": {"clean": 0.2, "flagged": 0.6},
-        "version": "1.0.0"
+        "fraud_score_thresholds": {"clean": 0.2, "flagged": 0.5, "banned": 0.7},
+        "version": "1.0.0",
+        "model_settings": {
+            "model_path": "model/model.pkl",
+            "feature_names_path": "model/feature_names.json",
+            "spam_model_path": "model/spam_clf.pkl",
+            "loweffort_model_path": "model/loweffort_clf.pkl"
+        },
+        "nlp_settings": {
+            "spam_threshold": 0.5,
+            "loweffort_threshold": 0.65
+        },
+        "suspicious_activity_thresholds": {
+            "young_upvote_ratio": 0.3,
+            "upvote_burst_count": 1,
+            "upvote_concentration": 0.5,
+            "mutual_upvote_count": 1,
+            "avg_post_spam_score": 0.5,
+            "post_burst_count": 2,
+            "upvote_sent_burst_count": 2
+        }
     }
 
 config = load_config()
 
 # --- Model loading ---
-model = load(MODEL_PATH)
-with open(FEATURE_NAMES_PATH) as f:
+model = load(config['model_settings']['model_path'])
+with open(config['model_settings']['feature_names_path']) as f:
     feature_names = json.load(f)
 
 # --- Spam/vague word dicts (can be moved to config) ---
@@ -88,50 +107,54 @@ def find_words(text, word_dict):
 
 # Initialize NLP analyzer for per-activity spam detection
 nlp_analyzer = ContentNLPAnalyzer(
-    spam_model_path='model/spam_clf.pkl',
-    loweffort_model_path='model/loweffort_clf.pkl'
+    spam_model_path=config['model_settings']['spam_model_path'],
+    loweffort_model_path=config['model_settings']['loweffort_model_path']
 )
 
 def explain_activities(user, features):
     suspicious_activities = []
+    thresholds = config['suspicious_activity_thresholds']
+    
     # Upvote-based
     upvotes = [a for a in user.karma_log if a.type == 'upvote_received']
-    if features.get('young_upvote_ratio', 0) > 0.3 and upvotes:
+    if features.get('young_upvote_ratio', 0) > thresholds['young_upvote_ratio'] and upvotes:
         suspicious_activities.append({
             'activity_id': upvotes[0].activity_id,
             'reason': 'Upvote from new account',
             'score': round(features['young_upvote_ratio'], 2)
         })
-    if features.get('upvote_burst_count', 0) > 1 and upvotes:
+    if features.get('upvote_burst_count', 0) > thresholds['upvote_burst_count'] and upvotes:
         suspicious_activities.append({
             'activity_id': upvotes[0].activity_id,
             'reason': 'Unusual burst of karma gain',
             'score': round(features['upvote_burst_count'], 2)
         })
-    if features.get('upvote_concentration', 0) > 0.5 and upvotes:
+    if features.get('upvote_concentration', 0) > thresholds['upvote_concentration'] and upvotes:
         suspicious_activities.append({
             'activity_id': upvotes[0].activity_id,
             'reason': 'Upvote from bot-like account',
             'score': round(features['upvote_concentration'], 2)
         })
     # --- New suspicious activity checks ---
-    if features.get('mutual_upvote_count', 0) >= 2:
+    if features.get('mutual_upvote_count', 0) >= thresholds['mutual_upvote_count']:
         suspicious_activities.append({
             'reason': 'High number of mutual upvotes',
             'score': features['mutual_upvote_count']
         })
-    if features.get('avg_post_spam_score', 0) > 0.7:
+    if features.get('avg_post_spam_score', 0) > thresholds['avg_post_spam_score']:
         suspicious_activities.append({
             'reason': 'High average post spam score',
             'score': round(features['avg_post_spam_score'], 2)
         })
-    if features.get('post_burst_count', 0) > 2:
+    if features.get('post_burst_count', 0) > thresholds['post_burst_count']:
         suspicious_activities.append({
+            'activity_id': user.karma_log[0].activity_id if user.karma_log else 'unknown',
             'reason': 'Burst of posts in short time',
             'score': features['post_burst_count']
         })
-    if features.get('upvote_sent_burst_count', 0) > 2:
+    if features.get('upvote_sent_burst_count', 0) > thresholds['upvote_sent_burst_count']:
         suspicious_activities.append({
+            'activity_id': user.karma_log[0].activity_id if user.karma_log else 'unknown',
             'reason': 'Burst of upvotes sent in short time',
             'score': features['upvote_sent_burst_count']
         })
@@ -140,7 +163,8 @@ def explain_activities(user, features):
     if len(activity_types) == 1:
         only_type = list(activity_types)[0]
         suspicious_activities.append({
-            'reason': f'Only {only_type} type of activity is suspiciouos',
+            'activity_id': user.karma_log[0].activity_id if user.karma_log else 'unknown',
+            'reason': f'Only {only_type} type of activity is suspicious',
             'score': 1.0
         })
     # Spam/vague word detection for comments and posts
@@ -163,7 +187,7 @@ def explain_activities(user, features):
             })
         # NLP-based spam detection
         nlp_result = nlp_analyzer.analyze(c.content or '')
-        if nlp_result['spam_score'] > 0.6:
+        if nlp_result['spam_score'] > config['nlp_settings']['spam_threshold']:
             suspicious_activities.append({
                 'activity_id': c.activity_id,
                 'reason': f"NLP spam score high ({nlp_result['spam_score']:.2f})",
@@ -172,9 +196,10 @@ def explain_activities(user, features):
     return suspicious_activities
 
 def get_status(fraud_score):
-    if fraud_score < 0.25:
+    thresholds = config['fraud_score_thresholds']
+    if fraud_score < thresholds['clean']:
         return 'clean'
-    elif fraud_score < 0.6:
+    elif fraud_score < thresholds['flagged']:
         return 'flagged'
     else:
         return 'banned_recommendation'
@@ -215,10 +240,9 @@ def health():
 def version():
     return {"version": config.get('version', '1.0.0')}
 
-# Mount static files only if they exist (for local development)
+# Mount static files (frontend) at root path
 if os.path.exists("frontend/build"):
-    app.mount("/static", StaticFiles(directory="frontend/build/static"), name="static")
-    app.mount("/", StaticFiles(directory="frontend/build", html=True), name="spa")
+    app.mount("/", StaticFiles(directory="frontend/build", html=True), name="static")
 
 if __name__ == '__main__':
     uvicorn.run(app, host='0.0.0.0', port=8000) 

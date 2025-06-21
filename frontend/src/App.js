@@ -271,7 +271,7 @@ function App() {
         {/* Footer */}
         <Box component="footer" sx={{ py: 4, textAlign: 'center', bgcolor: 'grey.900', color: 'grey.100', mt: 8 }}>
           <Typography variant="body2" paragraph>
-            Made with ❤️ by Vision Ventures
+            Vision Ventures: Empowering Solutions
           </Typography>
           <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, flexWrap: 'wrap' }}>
             <Typography variant="body2">

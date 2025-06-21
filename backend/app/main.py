@@ -86,7 +86,7 @@ class AnalyzeRequest(BaseModel):
     karma_log: List[KarmaActivity]
 
 class SuspiciousActivity(BaseModel):
-    activity_id: str
+    activity_id: Optional[str] = None
     reason: str
     score: float
 

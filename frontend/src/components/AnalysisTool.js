@@ -41,6 +41,7 @@ import {
   Pie,
   Cell
 } from 'recharts';
+import { apiUrl } from '../config';
 
 const ACTIVITY_TYPES = [
   { value: 'upvote_received', label: 'Upvote Received' },
@@ -168,7 +169,7 @@ function AnalysisTool() {
     setLoading(true);
     setError('');
     try {
-      const response = await fetch('/api/analyze', {
+      const response = await fetch(`${apiUrl}/api/analyze`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

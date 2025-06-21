@@ -8,6 +8,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import HealthAndSafetyIcon from '@mui/icons-material/HealthAndSafety';
 import InfoIcon from '@mui/icons-material/Info';
 import AnalysisTool from './components/AnalysisTool';
+import { apiUrl } from './config';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -31,7 +32,7 @@ function App() {
 
   const handleHealth = async () => {
     try {
-      const response = await fetch('/api/health', {
+      const response = await fetch(`${apiUrl}/api/health`, {
         method: 'GET',
         headers: {
           'Accept': 'application/json'
@@ -55,7 +56,7 @@ function App() {
 
   const handleVersion = async () => {
     try {
-      const response = await fetch('/api/version', {
+      const response = await fetch(`${apiUrl}/api/version`, {
         method: 'GET',
         headers: {
           'Accept': 'application/json'

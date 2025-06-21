@@ -15,19 +15,19 @@ RUN npm run build
 # Stage 2: Minimal Backend
 FROM python:3.11-slim
 
-WORKDIR /app
+WORKDIR /backend
 
 # Install only curl for health checks
 RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements and install with optimizations
-COPY requirements.txt ./
+COPY backend/requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy only essential files
-COPY app/ ./app/
-COPY model/ ./model/
-COPY data/ ./data/
+COPY backend/app/ ./app/
+COPY backend/model/ ./model/
+COPY backend/data/ ./data/
 
 # Copy frontend build
 COPY --from=frontend-build /app/build ./frontend/build
@@ -36,7 +36,7 @@ COPY --from=frontend-build /app/build ./frontend/build
 EXPOSE 8000
 
 # Environment variables
-ENV PYTHONPATH=/app
+ENV PYTHONPATH=/backend
 ENV PORT=8000
 ENV PYTHONUNBUFFERED=1
 

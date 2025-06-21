@@ -1,8 +1,8 @@
 # Use Python 3.11 slim image for smaller size
 FROM python:3.11-slim
 
-# Set working directory
-WORKDIR /app
+# Set working directory to backend
+WORKDIR /backend
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -12,22 +12,21 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements first for better caching
-COPY requirements.txt .
+COPY backend/requirements.txt .
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-
 # Copy application code
-COPY app/ ./app/
-COPY model/ ./model/
-COPY data/ ./data/
+COPY backend/app/ ./app/
+COPY backend/model/ ./model/
+COPY backend/data/ ./data/
 
 # Expose port
 EXPOSE 8000
 
 # Set environment variables
-ENV PYTHONPATH=/app
+ENV PYTHONPATH=/backend
 ENV PORT=8000
 ENV PYTHONUNBUFFERED=1
 

@@ -2,19 +2,19 @@
 FROM node:18-alpine AS build
 
 # Set working directory
-WORKDIR /app
+WORKDIR /frontend
 
 # Copy package files
-COPY package*.json ./
+COPY frontend/package*.json ./
 
 # Install dependencies
 RUN npm ci --only=production
 
 # Copy source code
-COPY . .
+COPY frontend/ ./
 
 # Copy nginx configuration to build context
-COPY ../deployment/nginx.conf ./nginx.conf
+COPY deployment/nginx.conf ./nginx.conf
 
 # Build the app
 RUN npm run build
@@ -23,10 +23,10 @@ RUN npm run build
 FROM nginx:alpine
 
 # Copy built app from build stage
-COPY --from=build /app/build /usr/share/nginx/html
+COPY --from=build /frontend/build /usr/share/nginx/html
 
 # Copy nginx configuration from build stage
-COPY --from=build /app/nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /frontend/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expose port
 EXPOSE 80

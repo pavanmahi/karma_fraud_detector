@@ -1,52 +1,48 @@
-# Multi-stage build for complete application
-# Stage 1: Build Frontend
+# Ultra-lightweight build for Render free tier
+# Stage 1: Build Frontend (minimal)
 FROM node:18-alpine AS frontend-build
 
 WORKDIR /app
-# Copy frontend package files
+# Copy only package files first for better caching
 COPY frontend/package*.json ./
-# Install frontend dependencies
-RUN npm ci --only=production
+# Install only production dependencies
+RUN npm ci --only=production --no-audit --no-fund
 
-# Copy frontend source code
+# Copy frontend source and build
 COPY frontend/ ./
-# Build the React app
 RUN npm run build
 
-# Stage 2: Build Backend with Frontend
+# Stage 2: Minimal Backend
 FROM python:3.11-slim
 
 WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    gcc \
-    g++ \
-    curl \
-    && rm -rf /var/lib/apt/lists/*
+# Install only curl for health checks
+RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
 
-# Copy Python requirements and install
+# Copy requirements and install with optimizations
 COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir --no-deps -r requirements.txt
 
-# Copy backend application code
+# Copy only essential files
 COPY app/ ./app/
 COPY model/ ./model/
 COPY data/ ./data/
 
-# Copy built frontend from previous stage
+# Copy frontend build
 COPY --from=frontend-build /app/build ./frontend/build
 
 # Expose port
 EXPOSE 8000
 
-# Set environment variables
+# Environment variables
 ENV PYTHONPATH=/app
 ENV PORT=8000
+ENV PYTHONUNBUFFERED=1
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
+# Simple health check
+HEALTHCHECK --interval=60s --timeout=10s --start-period=10s --retries=2 \
     CMD curl -f http://localhost:8000/api/health || exit 1
 
-# Run the application
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"] 
+# Start with single worker
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "1", "--log-level", "warning"] 

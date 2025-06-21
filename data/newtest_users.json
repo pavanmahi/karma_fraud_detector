@@ -1,0 +1,398 @@
+[
+    {
+      "user_id": "normal_001",
+      "account_age_days": 320,
+      "karma_log": [
+        {
+          "activity_id": "act_n_001_c0",
+          "type": "comment",
+          "content": "Great post, thanks for sharing!",
+          "timestamp": "2025-06-10T10:00:00Z"
+        },
+        {
+          "activity_id": "act_n_001_p0",
+          "type": "post_created",
+          "content": "My experience with open source contributions.",
+          "timestamp": "2025-06-09T09:00:00Z"
+        },
+        {
+          "activity_id": "act_n_001_u0",
+          "type": "upvote_received",
+          "from_user": "usr_2001",
+          "from_user_age_days": 150,
+          "timestamp": "2025-06-10T11:00:00Z"
+        },
+        {
+          "activity_id": "act_n_001_us0",
+          "type": "upvote_sent",
+          "to_user": "usr_3001",
+          "to_user_age_days": 210,
+          "timestamp": "2025-06-10T12:00:00Z"
+        }
+      ]
+    },
+    {
+      "user_id": "normal_002",
+      "account_age_days": 180,
+      "karma_log": [
+        {
+          "activity_id": "act_n_002_c0",
+          "type": "comment",
+          "content": "Nice analysis!",
+          "timestamp": "2025-06-11T08:00:00Z"
+        },
+        {
+          "activity_id": "act_n_002_p0",
+          "type": "post_created",
+          "content": "Tips for effective remote work.",
+          "timestamp": "2025-06-10T07:00:00Z"
+        },
+        {
+          "activity_id": "act_n_002_u0",
+          "type": "upvote_received",
+          "from_user": "usr_2002",
+          "from_user_age_days": 80,
+          "timestamp": "2025-06-11T09:00:00Z"
+        },
+        {
+          "activity_id": "act_n_002_us0",
+          "type": "upvote_sent",
+          "to_user": "usr_3002",
+          "to_user_age_days": 90,
+          "timestamp": "2025-06-11T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "user_id": "suspicious_001",
+      "account_age_days": 25,
+      "karma_log": [
+        {
+          "activity_id": "act_s_001_c0",
+          "type": "comment",
+          "content": "Nice post, vote up!",
+          "timestamp": "2025-06-12T10:00:00Z"
+        },
+        {
+          "activity_id": "act_s_001_p0",
+          "type": "post_created",
+          "content": "Unbelievable trick to get more followers!",
+          "timestamp": "2025-06-12T09:00:00Z"
+        },
+        {
+          "activity_id": "act_s_001_u0",
+          "type": "upvote_received",
+          "from_user": "usr_2003",
+          "from_user_age_days": 3,
+          "timestamp": "2025-06-12T11:00:00Z"
+        },
+        {
+          "activity_id": "act_s_001_us0",
+          "type": "upvote_sent",
+          "to_user": "usr_3003",
+          "to_user_age_days": 5,
+          "timestamp": "2025-06-12T12:00:00Z"
+        },
+        {
+          "activity_id": "act_s_001_us1",
+          "type": "upvote_sent",
+          "to_user": "usr_2003",
+          "to_user_age_days": 3,
+          "timestamp": "2025-06-12T13:00:00Z"
+        }
+      ]
+    },
+    {
+      "user_id": "suspicious_002",
+      "account_age_days": 40,
+      "karma_log": [
+        {
+          "activity_id": "act_s_002_c0",
+          "type": "comment",
+          "content": "Cool post, upvote!",
+          "timestamp": "2025-06-13T10:00:00Z"
+        },
+        {
+          "activity_id": "act_s_002_p0",
+          "type": "post_created",
+          "content": "Boost your karma instantly with this method.",
+          "timestamp": "2025-06-13T09:00:00Z"
+        },
+        {
+          "activity_id": "act_s_002_u0",
+          "type": "upvote_received",
+          "from_user": "usr_2004",
+          "from_user_age_days": 4,
+          "timestamp": "2025-06-13T11:00:00Z"
+        },
+        {
+          "activity_id": "act_s_002_us0",
+          "type": "upvote_sent",
+          "to_user": "usr_3004",
+          "to_user_age_days": 6,
+          "timestamp": "2025-06-13T12:00:00Z"
+        }
+      ]
+    },
+    {
+      "user_id": "fraudulent_001",
+      "account_age_days": 5,
+      "karma_log": [
+        {
+          "activity_id": "act_f_001_c0",
+          "type": "comment",
+          "content": "Upvote me plz! 🚀",
+          "timestamp": "2025-06-14T10:00:00Z"
+        },
+        {
+          "activity_id": "act_f_001_p0",
+          "type": "post_created",
+          "content": "Upvote me and I'll upvote you back!",
+          "timestamp": "2025-06-14T09:00:00Z"
+        },
+        {
+          "activity_id": "act_f_001_u0",
+          "type": "upvote_received",
+          "from_user": "usr_4001",
+          "from_user_age_days": 2,
+          "timestamp": "2025-06-14T11:00:00Z"
+        },
+        {
+          "activity_id": "act_f_001_us0",
+          "type": "upvote_sent",
+          "to_user": "usr_4001",
+          "to_user_age_days": 2,
+          "timestamp": "2025-06-14T12:00:00Z"
+        },
+        {
+          "activity_id": "act_f_001_u1",
+          "type": "upvote_received",
+          "from_user": "usr_4002",
+          "from_user_age_days": 2,
+          "timestamp": "2025-06-14T13:00:00Z"
+        },
+        {
+          "activity_id": "act_f_001_us1",
+          "type": "upvote_sent",
+          "to_user": "usr_4002",
+          "to_user_age_days": 2,
+          "timestamp": "2025-06-14T14:00:00Z"
+        }
+      ]
+    },
+    {
+      "user_id": "fraudulent_002",
+      "account_age_days": 8,
+      "karma_log": [
+        {
+          "activity_id": "act_f_002_c0",
+          "type": "comment",
+          "content": "Karma exchange, DM me now!",
+          "timestamp": "2025-06-15T10:00:00Z"
+        },
+        {
+          "activity_id": "act_f_002_p0",
+          "type": "post_created",
+          "content": "Join my upvote group for instant karma.",
+          "timestamp": "2025-06-15T09:00:00Z"
+        },
+        {
+          "activity_id": "act_f_002_u0",
+          "type": "upvote_received",
+          "from_user": "usr_4003",
+          "from_user_age_days": 1,
+          "timestamp": "2025-06-15T11:00:00Z"
+        },
+        {
+          "activity_id": "act_f_002_us0",
+          "type": "upvote_sent",
+          "to_user": "usr_4003",
+          "to_user_age_days": 1,
+          "timestamp": "2025-06-15T12:00:00Z"
+        },
+        {
+          "activity_id": "act_f_0112_u0",
+          "type": "upvote_received",
+          "from_user": "usr_4013",
+          "from_user_age_days": 1,
+          "timestamp": "2025-06-15T15:00:00Z"
+        },
+        {
+          "activity_id": "act_f_1132_us0",
+          "type": "upvote_sent",
+          "to_user": "usr_4013",
+          "to_user_age_days": 1,
+          "timestamp": "2025-06-15T18:00:00Z"
+        },
+        {
+          "activity_id": "act_f_002_us1",
+          "type": "upvote_sent",
+          "to_user": "usr_5001",
+          "to_user_age_days": 2,
+          "timestamp": "2025-06-15T13:00:00Z"
+        }
+      ]
+    },
+    {
+      "user_id": "bursty_posts_001",
+      "account_age_days": 100,
+      "karma_log": [
+        {
+          "activity_id": "act_b_001_p0",
+          "type": "post_created",
+          "content": "A review of the best programming languages in 2024.",
+          "timestamp": "2025-06-16T10:00:00Z"
+        },
+        {
+          "activity_id": "act_b_001_p1",
+          "type": "post_created",
+          "content": "Lessons learned from my first hackathon.",
+          "timestamp": "2025-06-16T10:10:00Z"
+        },
+        {
+          "activity_id": "act_b_001_p2",
+          "type": "post_created",
+          "content": "How to build a personal portfolio website.",
+          "timestamp": "2025-06-16T10:20:00Z"
+        },
+        {
+          "activity_id": "act_b_001_c0",
+          "type": "comment",
+          "content": "Awesome!",
+          "timestamp": "2025-06-16T11:00:00Z"
+        }
+      ]
+    },
+    {
+      "user_id": "only_posts_001",
+      "account_age_days": 200,
+      "karma_log": [
+        {
+          "activity_id": "act_op_001_p0",
+          "type": "post_created",
+          "content": "My experience with open source contributions.",
+          "timestamp": "2025-06-17T10:00:00Z"
+        },
+        {
+          "activity_id": "act_op_001_p1",
+          "type": "post_created",
+          "content": "Tips for effective remote work.",
+          "timestamp": "2025-06-17T11:00:00Z"
+        }
+      ]
+    },
+    {
+      "user_id": "only_sent_001",
+      "account_age_days": 50,
+      "karma_log": [
+        {
+          "activity_id": "act_os_001_us0",
+          "type": "upvote_sent",
+          "to_user": "usr_9999",
+          "to_user_age_days": 10,
+          "timestamp": "2025-06-18T10:00:00Z"
+        },
+        {
+          "activity_id": "act_os_001_us1",
+          "type": "upvote_sent",
+          "to_user": "usr_8888",
+          "to_user_age_days": 20,
+          "timestamp": "2025-06-18T11:00:00Z"
+        }
+      ]
+    },
+    {
+      "user_id": "12",
+      "account_age_days": 50,
+      "karma_log": [
+        {
+          "activity_id": "act_1",
+          "type": "comment",
+          "timestamp": "2025-06-13T15:56:34Z",
+          "source": "web",
+          "content": "upvote"
+        },
+        {
+          "activity_id": "act_2",
+          "type": "upvote_received",
+          "timestamp": "2025-06-14T16:56:34Z",
+          "source": "web",
+          "from_user": "1556",
+          "from_user_age_days": 2
+        },
+        {
+          "activity_id": "act_3",
+          "type": "upvote_sent",
+          "timestamp": "2025-06-14T18:05:34Z",
+          "source": "web",
+          "to_user": "1556",
+          "to_user_age_days": 2
+        },
+        {
+          "activity_id": "act_4",
+          "type": "post_created",
+          "timestamp": "2025-06-11T19:05:34Z",
+          "source": "web",
+          "content": "Best Ways to Get Karma Boost "
+        }
+      ]
+    },
+    {
+      "user_id": "12",
+      "karma_log": [
+        {
+          "activity_id": "act_1",
+          "type": "upvote_received",
+          "timestamp": "2025-06-19T22:48:36Z",
+          "source": "web",
+          "from_user": "155",
+          "from_user_age_days": 5
+        },
+        {
+          "activity_id": "act_2",
+          "type": "upvote_sent",
+          "timestamp": "2025-06-19T23:15:36Z",
+          "source": "web",
+          "to_user": "155",
+          "to_user_age_days": 5
+        },
+        {
+          "activity_id": "act_3",
+          "type": "comment",
+          "timestamp": "2025-06-11T00:15:36Z",
+          "source": "web",
+          "content": "Upvote"
+        },
+        {
+          "activity_id": "act_4",
+          "type": "post_created",
+          "timestamp": "2025-06-09T01:15:36Z",
+          "source": "web",
+          "content": "Hacks to get karma boost"
+        },
+        {
+          "activity_id": "act_5",
+          "type": "comment",
+          "timestamp": "2025-06-09T02:15:36Z",
+          "source": "web",
+          "content": "Follow me please"
+        },
+        {
+          "activity_id": "act_6",
+          "type": "upvote_received",
+          "timestamp": "2025-06-10T03:15:36Z",
+          "source": "web",
+          "from_user": "122",
+          "from_user_age_days": 3
+        },
+        {
+          "activity_id": "act_7",
+          "type": "upvote_sent",
+          "timestamp": "2025-06-10T04:25:36Z",
+          "source": "web",
+          "to_user": "122",
+          "to_user_age_days": 3
+        }
+      ]
+    }
+  ] 

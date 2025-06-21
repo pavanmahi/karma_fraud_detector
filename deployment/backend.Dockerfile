@@ -17,16 +17,11 @@ COPY requirements.txt .
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Pre-download sentence-transformers model to speed up deployment
-RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('all-MiniLM-L6-v2')"
 
 # Copy application code
 COPY app/ ./app/
 COPY model/ ./model/
 COPY data/ ./data/
-
-# Create config.json if it doesn't exist
-RUN echo '{"fraud_score_thresholds": {"clean": 0.2, "flagged": 0.6}, "version": "1.0.0"}' > config.json
 
 # Expose port
 EXPOSE 8000
@@ -34,10 +29,11 @@ EXPOSE 8000
 # Set environment variables
 ENV PYTHONPATH=/app
 ENV PORT=8000
+ENV PYTHONUNBUFFERED=1
 
 # Health check
-HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
+HEALTHCHECK --interval=60s --timeout=10s --start-period=10s --retries=2 \
     CMD curl -f http://localhost:8000/api/health || exit 1
 
-# Run the application
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"] 
+# Run the application with minimal logging
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "1", "--log-level", "warning"] 

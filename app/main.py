@@ -240,9 +240,18 @@ def health():
 def version():
     return {"version": config.get('version', '1.0.0')}
 
-# Mount static files (frontend) at root path
-if os.path.exists("frontend/build"):
-    app.mount("/", StaticFiles(directory="frontend/build", html=True), name="static")
+@app.get("/")
+async def root():
+    return {
+        "message": "Karma Fraud Detector API",
+        "version": config.get('version', '1.0.0'),
+        "endpoints": {
+            "health": "/api/health",
+            "version": "/api/version", 
+            "analyze": "/api/analyze"
+        },
+        "docs": "/docs"
+    }
 
 if __name__ == '__main__':
     uvicorn.run(app, host='0.0.0.0', port=8000) 

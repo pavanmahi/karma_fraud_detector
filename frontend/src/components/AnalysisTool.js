@@ -612,9 +612,9 @@ function AnalysisTool() {
                       alignItems: 'center',
                       justifyContent: 'center',
                       bgcolor:
-                        result.fraud_score > 0.6
+                        result.fraud_score > 0.5
                           ? 'error.main'
-                          : result.fraud_score > 0.2
+                          : result.fraud_score > 0.25
                           ? 'warning.main'
                           : 'success.main',
                       color: 'white',
@@ -633,9 +633,9 @@ function AnalysisTool() {
                     Status: {result.status.charAt(0).toUpperCase() + result.status.slice(1)}
                   </Typography>
                   <Typography variant="body1" color="text.secondary" align="center">
-                    {result.fraud_score > 0.6
+                    {result.fraud_score > 0.5
                       ? 'High risk of fraudulent activity'
-                      : result.fraud_score > 0.2
+                      : result.fraud_score > 0.25
                       ? 'Moderate risk detected'
                       : 'Low risk profile'}
                   </Typography>
